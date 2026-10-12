@@ -1,0 +1,238 @@
+/* ---------- 全局变量与重置 ---------- */
+:root {
+  --bg: #f4f5f7;            /* 页面背景 */
+  --card: #ffffff;          /* 卡片背景 */
+  --text: #1f2430;          /* 主文字 */
+  --muted: #8a91a0;         /* 次要文字 */
+  --accent: #4f7cff;        /* 主题色 */
+  --danger: #ff5d5d;        /* 删除色 */
+  --border: #e6e8ee;        /* 边框色 */
+  --radius: 14px;           /* 圆角 */
+  --shadow: 0 8px 30px rgba(31, 36, 48, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+/* ---------- 主卡片 ---------- */
+.app {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+}
+
+.app-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.app-header .date {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ---------- 输入区 ---------- */
+.todo-form {
+  display: flex;
+  gap: 10px;
+  margin: 24px 0 16px;
+}
+
+.todo-form input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.todo-form input:focus {
+  border-color: var(--accent);
+}
+
+.add-btn {
+  width: 46px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.add-btn:hover { opacity: 0.85; }
+.add-btn:active { transform: scale(0.94); }
+
+/* ---------- 筛选栏 ---------- */
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.filter-btn:hover { background: var(--bg); }
+
+.filter-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------- 任务列表 ---------- */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s, opacity 0.3s;
+  animation: slide-in 0.25s ease;
+}
+
+.todo-item:hover { border-color: #cdd4e4; }
+
+/* 新任务入场动画 */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 自定义复选框 */
+.todo-item input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 1.5px solid var(--muted);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.todo-item input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* 选中后的对勾 */
+.todo-item input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.todo-title {
+  flex: 1;
+  font-size: 15px;
+  word-break: break-all;
+  transition: color 0.2s;
+}
+
+/* 已完成的任务：灰色 + 删除线 */
+.todo-item.completed .todo-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  opacity: 0;               /* 默认隐藏，悬停时显示 */
+  transition: opacity 0.2s, color 0.2s, background 0.2s;
+}
+
+.todo-item:hover .delete-btn { opacity: 1; }
+.delete-btn:hover { color: var(--danger); background: #fff0f0; }
+
+/* ---------- 空状态 ---------- */
+.empty {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--muted);
+}
+
+.empty-icon { font-size: 32px; }
+.empty p { margin-top: 8px; font-size: 14px; }
+
+/* ---------- 底部状态栏 ---------- */
+.app-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.clear-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.clear-btn:hover { color: var(--danger); background: #fff0f0; }
+
+/* ---------- 移动端适配 ---------- */
+@media (max-width: 480px) {
+  body { padding: 16px 8px; }
+  .app { padding: 20px; }
+  .delete-btn { opacity: 1; }  /* 触屏设备始终显示删除按钮 */
+}
